@@ -5,7 +5,7 @@
 
 const express = require('express')
 const app = express()
-const handler = require('./function/handler');
+const { handler } = require('./function/handler');
 const bodyParser = require('body-parser')
 
 // app.use(bodyParser.urlencoded({ extended: false }));
