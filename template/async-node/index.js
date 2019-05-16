@@ -5,9 +5,10 @@
 
 const express = require('express')
 const app = express()
-const { handler } = require('./function/handler');
+const { handler, schema } = require('./function/handler');
 const bodyParser = require('body-parser')
-
+const jsen = require('jsen');
+ 
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
@@ -16,6 +17,9 @@ app.disable('x-powered-by');
 
 
 
+const validate = schema ? jsen(schema) : null;
+
+const raise = e => { throw e }
 
 const middleware = (req, res) => {
     Promise.resolve({
@@ -25,6 +29,13 @@ const middleware = (req, res) => {
         query: req.query,
         path: req.path,
     })
+        .then(x => {
+            if(!validate(x.body)) {
+                const msg = 'Body does not respect schema:\n' + validate.errors.map(e => `error of type ${e.keyword} at path "${e.path}"`).join('\n')
+                throw new Error(msg)
+            }
+            return x
+        })
         .then(handler)
         .then(result => {
             res.set({'Content-Type': 'application/json', ...(result.headers || {})})
@@ -33,7 +44,7 @@ const middleware = (req, res) => {
         })
         .catch(e => {
             res.status(500)
-            res.send(JSON.stringify({error: String(e)}))
+            res.send(JSON.stringify({error: (e.message)}))
         })
 }
 

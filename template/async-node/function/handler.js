@@ -2,7 +2,10 @@
 
 
 module.exports.schema = {
-
+    type: 'object',
+    required: [
+        'name'
+    ]
 }
 
 

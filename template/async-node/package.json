@@ -10,7 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^6.10.0",
     "body-parser": "^1.18.2",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "jsen": "^0.6.6"
+  },
+  "devDependencies": {
+    "@types/jsen": "0.0.19"
   }
 }
