@@ -9,10 +9,11 @@ schema = {
 
 
 
-async def handle(name, surname):
+async def handle(body, path, query):
+
     return {
         'status': 200,
         'body': {
-            'message': f'ciao {name} {surname}!'
+            'message': f'ciao {body.name} {body.surname}!'
         }
     }

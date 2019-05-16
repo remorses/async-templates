@@ -22,7 +22,7 @@ async def main_route(req):
     try:
         data = req.json
         validate and validate(data)
-        ret = await handler.handle(**data)
+        ret = await handler.handle(data, req.path, req.query)
         body = ret['body'] if 'body' in ret else {}
         headers = ret['headers'] if 'headers' in ret else None
         status = ret['status'] if 'status' in ret else 200
