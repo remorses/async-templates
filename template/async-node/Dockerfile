@@ -44,6 +44,9 @@ RUN chown app:app -R /home/app \
 
 USER app
 
+# typescript compile
+RUN [ -f ./function/tsconfig.json ] && ./node_modules/typescript/bin/tsc --project ./function
+
 ENV cgi_headers="true"
 ENV fprocess="node index.js"
 ENV mode="http"

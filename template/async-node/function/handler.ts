@@ -1,7 +1,7 @@
 
 
 
-module.exports.schema = {
+export const schema: JsonSchema = {
     type: 'object',
     required: [
         'name'
@@ -9,7 +9,7 @@ module.exports.schema = {
 }
 
 
-module.exports.handler = async ({ body: { name }}) => {
+export const handler: Handler = async ({ body: { name }}) => {
     // throw new Error('ho no!')
     return {
         body: {

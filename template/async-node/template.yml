@@ -1,2 +1,2 @@
-language: node10-express
+language: async-node
 fprocess: node index.js
