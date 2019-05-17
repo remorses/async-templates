@@ -30,7 +30,7 @@ const middleware = (req, res) => {
         path: req.path,
     })
         .then(x => {
-            if(!validate(x.body)) {
+            if(validate && !validate(x.body)) {
                 const msg = 'Body does not respect schema:\n' + validate.errors.map(e => `error of type ${e.keyword} at path "${e.path}"`).join('\n')
                 throw new Error(msg)
             }
