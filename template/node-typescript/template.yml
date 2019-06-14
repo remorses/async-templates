@@ -1,2 +1,0 @@
-language: node-typescript
-fprocess: node index.js

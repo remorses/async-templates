@@ -12,9 +12,9 @@ interface Result {
 interface RequestBody {
     body: any
     headers: Object
-    method: "POST" | "GET" | "PUT" | "DELETE" | "PATCH"
+    method: String // "POST" | "GET" | "PUT" | "DELETE" | "PATCH"
     query: String
     path: String
 }
 
-type Handler = (body: RequestBody, path: string, query: string) => Promise<Result>
+type Handler = (body: RequestBody,) => Promise<Result>
