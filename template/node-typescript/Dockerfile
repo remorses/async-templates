@@ -1,13 +1,13 @@
-FROM node:10.12.0-alpine
+FROM node:8.9.1-alpine
 
 RUN addgroup -S app && adduser -S -g app app
 
 # Alternatively use ADD https:// (which will not be cached by Docker builder)
-RUN apk --no-cache add curl ca-certificates \
+RUN apk --no-cache add curl \
     && echo "Pulling watchdog binary from Github." \
-    && curl -sSLf https://github.com/openfaas-incubator/of-watchdog/releases/download/0.5.0/of-watchdog > /usr/bin/fwatchdog \
+    && curl -sSL https://github.com/openfaas/faas/releases/download/0.7.6/fwatchdog > /usr/bin/fwatchdog \
     && chmod +x /usr/bin/fwatchdog \
-    && apk del curl
+    && apk del curl --no-cache
 
 WORKDIR /root/
 
@@ -44,19 +44,12 @@ RUN chown app:app -R /home/app \
 
 USER app
 
-# typescript compile
-RUN [ -f ./function/tsconfig.json ] && ./node_modules/typescript/bin/tsc --project ./function
+RUN ./node_modules/typescript/bin/tsc --project ./function
 
 ENV cgi_headers="true"
 ENV fprocess="node index.js"
-ENV mode="http"
-ENV upstream_url="http://127.0.0.1:3000"
 
-ENV exec_timeout="10s"
-ENV write_timeout="15s"
-ENV read_timeout="15s"
-
-HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
+HEALTHCHECK --interval=1s CMD [ -e /tmp/.lock ] || exit 1
 
 CMD ["fwatchdog"]
 

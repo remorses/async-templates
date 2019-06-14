@@ -1,7 +1,7 @@
 
 
 
-module.exports.schema = {
+module.exports.chema = {
     type: 'object',
     required: [
         'name'

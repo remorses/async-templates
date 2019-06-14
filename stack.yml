@@ -3,7 +3,11 @@ provider:
   name: openfaas
   gateway: http://localhost:8080
 functions:
-  test:
-    lang: async-python
-    handler: ./test
-    image: test:latest
+  # test:
+  #   lang: async-python
+  #   handler: ./test-python
+  #   image: test-python:latest
+  test-node:
+    lang: async-node
+    handler: ./test-node
+    image: test-node:latest
